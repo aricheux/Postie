@@ -1,5 +1,7 @@
-import Combine
 import Foundation
+#if canImport(Combine)
+import Combine
+#endif
 
 public class ResponseDecoder {
 
@@ -9,4 +11,6 @@ public class ResponseDecoder {
     }
 }
 
+#if canImport(Combine)
 extension ResponseDecoder: TopLevelDecoder {}
+#endif

@@ -1,7 +1,10 @@
 import Foundation
+#if canImport(Combine)
 import Combine
+#endif
 import Postie
 
+@available(iOS 13.0, *)
 public class URLSessionCombineStub: URLSessionProvider {
 
     private var result: Result<URLSession.DataTaskPublisher.Output, URLSession.DataTaskPublisher.Failure>

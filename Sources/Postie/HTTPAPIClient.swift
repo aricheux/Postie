@@ -1,6 +1,8 @@
 /* swiftlint:disable line_length */
-import Combine
 import Foundation
+#if canImport(Combine)
+import Combine
+#endif
 import os.log
 
 open class HTTPAPIClient {
@@ -105,6 +107,7 @@ open class HTTPAPIClient {
 
     // MARK: - Combine
 
+    @available(iOS 13.0, *)
     open func send<R: Request>(_ request: R) -> AnyPublisher<R.Response, Error> {
         // Create a request encoder
         let encoder = RequestEncoder(baseURL: prepareURL())
@@ -120,6 +123,7 @@ open class HTTPAPIClient {
         return sendUrlRequest(responseType: R.Response.self, urlRequest: urlRequest)
     }
 
+    @available(iOS 13.0, *)
     open func send<Request: JSONRequest>(_ request: Request) -> AnyPublisher<Request.Response, Error> {
         // Create a request encoder
         let encoder = RequestEncoder(baseURL: prepareURL())
@@ -135,6 +139,7 @@ open class HTTPAPIClient {
         return sendUrlRequest(responseType: Request.Response.self, urlRequest: urlRequest)
     }
 
+    @available(iOS 13.0, *)
     open func send<Request: FormURLEncodedRequest>(_ request: Request) -> AnyPublisher<Request.Response, Error> {
         // Create a request encoder
         let encoder = RequestEncoder(baseURL: prepareURL())
@@ -150,7 +155,9 @@ open class HTTPAPIClient {
         return sendUrlRequest(responseType: Request.Response.self, urlRequest: urlRequest)
     }
 
+    @available(iOS 13.0, *)
     open func send<Request: PlainRequest>(_ request: Request) -> AnyPublisher<Request.Response, Error> {
+        var baseURL = url
         // Create a request encoder
         let encoder = RequestEncoder(baseURL: prepareURL())
         // Encode request
@@ -165,6 +172,7 @@ open class HTTPAPIClient {
         return sendUrlRequest(responseType: Request.Response.self, urlRequest: urlRequest)
     }
 
+    @available(iOS 13.0, *)
     private func sendUrlRequest<Response: Decodable>(responseType: Response.Type, urlRequest: URLRequest) -> AnyPublisher<Response, Error> {
         // Send request using the given URL session provider
         return session
@@ -181,6 +189,7 @@ open class HTTPAPIClient {
 
     // MARK: - Response Handling
 
+    @available(iOS 13.0, *)
     private func processResponse<Body: Decodable, Decoder: TopLevelDecoder>(body: Body.Type, data: Data, response: URLResponse, urlRequest: URLRequest, decoder: Decoder) throws -> (headers: [AnyHashable: Any], body: Body) where Decoder.Input == Data {
         // Log the request
         log(urlRequest: urlRequest, response: response, data: data)
